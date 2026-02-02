@@ -1,30 +1,31 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include <SDL3_image/SDL_image.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include <iostream>
 
-int main(int, char **)
-{
-    SDL_Init(SDL_INIT_VIDEO);
+#include "UI.h"
+#include "Window.h"
 
-    SDL_Window *Window{SDL_CreateWindow(
-        "Hello Window", 800, 300, 0)};
+int main(int, char **) {
+  SDL_Init(SDL_INIT_VIDEO);
+  Window GameWindow;
+  UI UIManager;
 
-    bool IsRunning = true;
-    SDL_Event Event;
-    while (IsRunning)
-    {
-        while (SDL_PollEvent(&Event))
-        {
-            if (Event.type == SDL_EVENT_QUIT)
-            {
-                IsRunning = false;
-            }
-        }
+  bool IsRunning = true;
+  SDL_Event Event;
+  while (IsRunning) {
+    while (SDL_PollEvent(&Event)) {
+      UIManager.HandleEvent(Event);
+      if (Event.type == SDL_EVENT_QUIT) {
+        IsRunning = false;
+      }
     }
 
-    SDL_DestroyWindow(Window);
-    SDL_Quit();
+    GameWindow.Render();
+    UIManager.Render(GameWindow.GetSurface());
+    GameWindow.Update();
+  }
 
-    return 0;
+  SDL_Quit();
+
+  return 0;
 }

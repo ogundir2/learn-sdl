@@ -1,0 +1,11 @@
+{
+  BasedOnStyle: LLVM,
+  AllowShortFunctionsOnASingleLine: Empty,
+  BinPackParameters: false,
+  BinPackArguments: false,
+  ColumnLimit: 0,
+  IndentWidth: 2,
+  TabWidth: 2,
+  ContinuationIndentWidth: 2,
+  Cpp11BracedListStyle: false,
+}
