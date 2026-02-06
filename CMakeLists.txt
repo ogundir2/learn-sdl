@@ -26,6 +26,7 @@ set(
 add_executable(
     LearnSDL
     src/main.cpp
+    src/Image.cpp
 )
 
 if(APPLE)

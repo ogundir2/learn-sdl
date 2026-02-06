@@ -27,7 +27,7 @@ public:
   }
 
   int GetWidth() const {
-    return { 800 };
+    return WindowWidth;
   }
 
   int GetHeight() const {
@@ -49,4 +49,5 @@ public:
 
 private:
   SDL_Window* SDLWindow{ nullptr };
+  int WindowWidth{ 600 };
 };

@@ -1,15 +1,24 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
-#include "Image.h"
+#include "Text.h"
 #include "Window.h"
+#include "WrappedText.h"
 
 int main(int, char**) {
   SDL_Init(SDL_INIT_VIDEO);
+  if (!TTF_Init()) {
+    std::cout << "Error initializing SDL_ttf: "
+              << SDL_GetError();
+  }
+
   Window GameWindow;
-  Image Example("Assets/land2.bmp");
-  Uint64 total = 0;
-  Uint64 count = 0;
+  WrappedText TextExample {
+    "The quick brown fox jumps over the lazy dog",
+    36.0f,
+    GameWindow.GetWidth()
+  };
 
   bool IsRunning = true;
   SDL_Event Event;
@@ -21,17 +30,11 @@ int main(int, char**) {
     }
 
     GameWindow.Render();
-    Uint64 Start{ SDL_GetPerformanceCounter() };
-    Example.Render(GameWindow.GetSurface());
-    Uint64 Delta{ SDL_GetPerformanceCounter() - Start };
-    total += Delta;
-    count += 1;
+    TextExample.Render(GameWindow.GetSurface());
     GameWindow.Update();
   }
 
-  std::cout << "Average time to Render Image: "
-            << total / count << '\n';
-
+  TTF_Quit();
   SDL_Quit();
 
   return 0;
